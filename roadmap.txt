@@ -1,0 +1,7 @@
+src/
+├── main.rs          # Der Einstiegspunkt (parst Argumente, startet den Scan)
+├── cli.rs           # Alles, was mit Clap und Argumenten zu tun hat
+└── scanner/         # Ein Unterordner für die gesamte Scan-Logik
+    ├── mod.rs       # Definiert das Scanner-Modul
+    ├── connect.rs   # Der asynchrone TCP-Connect-Scan (Phase 2)
+    └── syn.rs       # Der Low-Level SYN-Stealth-Scan (Phase 3)

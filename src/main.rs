@@ -2,27 +2,35 @@ use std::net::TcpStream;
 use std::time::Duration;
 use std::net::ToSocketAddrs;
 
+mod cli;
+
+use clap::Parser;
+
+fn scan_single_port_3_way(host: &str, port: u16) {
+  let target = format!("{}:{}", host, port);
+
+  if let Ok(mut addresses) = target.to_socket_addrs() {
+    if let Some(ip_addr) = addresses.next() {
+      let timeout = Duration::from_millis(200);
+      if TcpStream::connect_timeout(&ip_addr, timeout).is_ok() {
+        println!("{}/tcp open", port)    
+      } 
+    }
+  }
+}
 
 fn main() {
-  let host = "google.com";
-  let port = "443";
+  let args = cli::Args::parse();
 
 
-  let timeout = Duration::from_secs(3);
-  let target = format!("{}:{}", host, port);
-  println!("Target: {}:{}",host, port);
+  let host = args.host;
+  let ports = cli::parse_ports(&args.ports);
+ 
+  println!("Scanning: {} ports for {}",ports.len(), host);
 
-  match target.to_socket_addrs() {
-    Ok(mut addrs) => {
-      if let Some(socket_addr) = addrs.next() {
-        match TcpStream::connect_timeout(&socket_addr, timeout) {
-          Ok(_) => println!("{}/tcp offen", port),
-          Err(_) => println!("{}/tcp geschlossen", port),
-        }
-      } else {
-        println!("Error: could not find IP for given domain");
-      }
-    }
-    Err(_e) => println!("DNS error!")
-  }
+  for &port in &ports {
+    scan_single_port_3_way(&host, port);
+  }  
+
+  println!("Scan completed!")
 }
