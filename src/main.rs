@@ -2,6 +2,7 @@ mod cli;
 mod services;
 mod scanner;
 
+use std::time::Instant;
 use clap::Parser;
 use futures::stream::{self, StreamExt};
 
@@ -19,7 +20,7 @@ async fn main() {
 
   println!("PORT      STATE      SERVICE");
 
-
+  let start_time = Instant::now(); // stopwatch
   let ports_stream = stream::iter(ports_vec);
   ports_stream.for_each_concurrent(concurrency, |port| {
     let host = host.clone();
@@ -30,5 +31,9 @@ async fn main() {
     }
   }).await;
 
-  println!("Scan completed!")
+  let duration = start_time.elapsed();
+
+  println!("--------------------------------------");
+  println!("Scan completed in {:.2?}", duration);
+
 }
