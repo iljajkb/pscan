@@ -1,4 +1,4 @@
-use clap::Parser;
+use clap::{Parser, ValueEnum};
 
 /// small and fast port scanner in rust, by iljaj
 #[derive(Parser, Debug)]
@@ -7,6 +7,21 @@ pub struct Args {
   pub host: String,
   #[arg(short, long, default_value = "1-1000")]
   pub ports: String,
+  /// Scan type to use
+  #[arg(short, long, value_enum, default_value_t = ScanType::Connect)]
+  pub type_scan: ScanType,
+
+  /// Speed/Concurrency (number of parallel requests
+  #[arg(short, long, default_value_t = 200)]
+  pub speed: usize,
+}
+
+#[derive(ValueEnum, Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ScanType {
+    /// Full 3-Way Handshake (TCP Connect)
+    Connect,
+    /// TCP SYN Scan (Stealth) - Requires root privileges
+    Syn,
 }
 
 pub fn parse_ports(port_arg: &str) -> Vec<u16> {
