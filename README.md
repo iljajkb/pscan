@@ -3,6 +3,11 @@
 This is a small hobby project of mine. I like hacking/pentesting and wanted to learn more about networking.
 Moreover, this gave me the chance to learn a new and cool programming language - Rust! 
 
+## Run!
+
+- `cargo run -- <HOST>`
+- `cargo run -- <HOST> -p- -s 1024` (full scan of 65k ports, takes ~11s)
+
 ## Current Features
 
 - connect scan (3-way-handshake via TCP)
