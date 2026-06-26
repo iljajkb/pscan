@@ -3,7 +3,13 @@
 This is a small hobby project of mine. I like hacking/pentesting and wanted to learn more about networking.
 Moreover, this gave me the chance to learn a new and cool programming language - Rust! 
 
-## Run!
+## Install and Run!
+
+- `cd pscan`
+- `cargo install --path .`
+- `pscan <HOST>`
+
+or run without installing:
 
 - `cargo run -- <HOST>`
 - `cargo run -- <HOST> -p- -s 1024` (full scan of 65k ports, takes ~11s)
@@ -17,10 +23,8 @@ Moreover, this gave me the chance to learn a new and cool programming language -
   - `-p 80,443,22`
   - `-p 10-100`
 - service detection via `.json`-map
+- Stealthy SYN scan: this is currently not working on my macOs-machine, because the macOS kernel is much more restrictive about TCP packets and working with raw sockets is not working currently
 
 ## Upcomping Features
 
-The next 'bigger' feature will be a stealth scan. 
-Currently, there is only the connect scan available, which completes the full three-way-handshake via TCP.
-A stealth scan – known as SYN – doesn't complete the full TCP handshake and therefore is stealthier. 
-This scan type requires root privileges.
+- make SYN scans work for macOS, may need to work with Layer 2 (datalink) sniffing, which makes this much more complex and not very stable for VPN connections 
