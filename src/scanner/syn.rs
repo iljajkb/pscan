@@ -26,14 +26,11 @@ pub async fn scan_ports_syn(ports: Vec<u16>, target_ip: &String, services: &Arc<
       let mut iter = pnet::transport::tcp_packet_iter(&mut rx);
 
       loop {
-        println!("in loop");
         match iter.next() {
           Ok((packet, addr)) => {
 
-            println!("Ok(packet, addr)");
             if addr == target {
 
-              println!("addr == target");
               let flags = packet.get_flags();
               let sport = packet.get_source();
                 // SYN-ACK = Port ist offen
