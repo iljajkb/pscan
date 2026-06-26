@@ -19,6 +19,8 @@ async fn main() {
   let scan_type = args.type_scan;
 
   let service_map = Arc::new(services::load_services());
+
+  print_banner();
   println!("Scanning: {} ports for {}",ports_vec.len(), host);
 
   println!("PORT      STATE      SERVICE");
@@ -44,4 +46,16 @@ async fn main() {
   println!("--------------------------------------");
   println!("Scan completed in {:.2?}", duration);
 
+}
+
+fn print_banner() {
+
+  println!(" _______  _______  _______  _______  __    _ ");
+  println!("|       ||       ||       ||   _   ||  |  | |");
+  println!("|    _  ||  _____||       ||  |_|  ||   |_| |");
+  println!("|   |_| || |_____ |       ||       ||       |");
+  println!("|    ___||_____  ||      _||       ||  _    |");
+  println!("|   |     _____| ||     |_ |   _   || | |   |");
+  println!("|___|    |_______||_______||__| |__||_|  |__|");
+  println!("                                             ");
 }
